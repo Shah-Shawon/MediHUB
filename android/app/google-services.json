@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "109228684267",
+    "project_id": "medihub-c5e58",
+    "storage_bucket": "medihub-c5e58.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109228684267:android:802c3f1c2acc7fe4b4dfae",
+        "android_client_info": {
+          "package_name": "com.example.medihub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "109228684267-c5427oirtfs46ickpk4l2ldkfpgp9b92.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5aW6Gn4dSKQb0QcttynhmvdmldSx_eF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109228684267-c5427oirtfs46ickpk4l2ldkfpgp9b92.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
