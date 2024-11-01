@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:medibd/appbar.dart';
+import 'package:medibd/bmiCalculate.dart';
 import 'package:medibd/drawer.dart';
 import 'package:medibd/drugdictionary.dart';
 import 'package:medibd/hospital.dart';
+import 'package:medibd/splash_screen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: SplashScreen(),
     );
   }
 }
@@ -30,44 +33,56 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: CustomDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
-          children: <Widget>[
-            ServiceTile(
-              icon: Icons.local_hospital,
-              title: 'Medicine Dictionary',
-              page: const MedicineApp(),
-            ),
-            ServiceTile(
-              icon: Icons.calculate,
-              title: 'BMI Calculator',
-              page: const MedicineApp(),
-            ),
-            ServiceTile(
-              icon: Icons.person_search,
-              title: 'Doctor List',
-              page: const MedicineApp(),
-            ),
-            ServiceTile(
-              icon: Icons.phone,
-              title: 'Ambulance Number',
-              page: const MedicineApp(),
-            ),
-            ServiceTile(
-              icon: Icons.store_mall_directory,
-              title: 'Nearest Pharmacy',
-              page: const MedicineApp(),
-            ),
-            ServiceTile(
-              icon: Icons.local_hospital,
-              title: 'Nearest Hospital',
-              page: HospitalListScreen(),
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF0D5C75), // Dark teal
+              Color(0xFF2A93B4), // Lighter blue
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.count(
+            crossAxisCount: 2,
+            crossAxisSpacing: 8.0,
+            mainAxisSpacing: 8.0,
+            children: <Widget>[
+              ServiceTile(
+                icon: Icons.local_hospital,
+                title: 'Medicine Dictionary',
+                page: const MedicineApp(),
+              ),
+              ServiceTile(
+                icon: Icons.calculate,
+                title: 'BMI Calculator',
+                page: BMICalculatorApp(),
+              ),
+              ServiceTile(
+                icon: Icons.person_search,
+                title: 'Doctor List',
+                page: const MedicineApp(),
+              ),
+              ServiceTile(
+                icon: Icons.phone,
+                title: 'Ambulance Number',
+                page: const MedicineApp(),
+              ),
+              ServiceTile(
+                icon: Icons.store_mall_directory,
+                title: 'Nearest Pharmacy',
+                page: const MedicineApp(),
+              ),
+              ServiceTile(
+                icon: Icons.local_hospital,
+                title: 'Nearest Hospital',
+                page: HospitalListScreen(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -77,10 +92,14 @@ class HomePage extends StatelessWidget {
 class ServiceTile extends StatelessWidget {
   final IconData icon;
   final String title;
-  final Widget page; // New property to hold the page widget
+  final Widget page;
 
-  const ServiceTile(
-      {super.key, required this.icon, required this.title, required this.page});
+  const ServiceTile({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.page,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +107,12 @@ class ServiceTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => page), // Navigate to the respective page
+          MaterialPageRoute(builder: (context) => page),
         );
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.blue[50],
+          color: Colors.white.withOpacity(0.8),
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Column(
