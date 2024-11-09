@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(BMICalculatorApp());
+  runApp(const BMICalculatorApp());
 }
 
 class BMICalculatorApp extends StatelessWidget {
+  const BMICalculatorApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,12 +14,14 @@ class BMICalculatorApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: BMICalculator(),
+      home: const BMICalculator(),
     );
   }
 }
 
 class BMICalculator extends StatefulWidget {
+  const BMICalculator({super.key});
+
   @override
   _BMICalculatorState createState() => _BMICalculatorState();
 }
@@ -67,10 +71,10 @@ class _BMICalculatorState extends State<BMICalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BMI Calculator'),
+        title: const Text('BMI Calculator'),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -85,7 +89,7 @@ class _BMICalculatorState extends State<BMICalculator> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
+              const Text(
                 'Enter your height:',
                 style: TextStyle(
                     fontSize: 18,
@@ -98,7 +102,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                     child: TextField(
                       controller: _feetController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Feet',
                         border: OutlineInputBorder(),
                         filled: true,
@@ -106,12 +110,12 @@ class _BMICalculatorState extends State<BMICalculator> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _inchesController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Inches',
                         border: OutlineInputBorder(),
                         filled: true,
@@ -121,8 +125,8 @@ class _BMICalculatorState extends State<BMICalculator> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Enter your weight (kg):',
                 style: TextStyle(
                     fontSize: 18,
@@ -132,42 +136,43 @@ class _BMICalculatorState extends State<BMICalculator> {
               TextField(
                 controller: _weightController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Weight in kg',
                   border: OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.white, // Background of text field
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
                   onPressed: calculateBMI,
-                  child: Text('Calculate BMI'),
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
+                  child: const Text('Calculate BMI'),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Center(
                 child: Text(
                   _result,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Center(
                 child: Text(
                   _suggestion,
-                  style: TextStyle(fontSize: 18, color: Colors.teal[700]),
+                  style: const TextStyle(fontSize: 18, color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
               ),

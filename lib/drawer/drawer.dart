@@ -28,7 +28,7 @@ class CustomDrawer extends StatelessWidget {
       future: getUserInfo(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Drawer(
+          return const Drawer(
             child: Center(child: CircularProgressIndicator()),
           );
         }

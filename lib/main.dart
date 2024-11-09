@@ -17,19 +17,21 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Firebase Login',
+      title: 'MediHUB',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/login',
+      initialRoute: '/splash',
       routes: {
         '/splash': (context) => SplashScreen(),
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
-        '/home': (context) => HomePage(),
+        '/home': (context) => const HomePage(),
       },
     );
   }

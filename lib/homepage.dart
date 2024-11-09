@@ -7,7 +7,7 @@ import 'package:medibd/hospital.dart';
 import 'package:medibd/splash_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -31,10 +31,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
-      drawer: CustomDrawer(),
+      appBar: const CustomAppBar(),
+      drawer: const CustomDrawer(),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -50,11 +50,11 @@ class HomePage extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: 8.0,
             mainAxisSpacing: 8.0,
-            children: <Widget>[
+            children: const <Widget>[
               ServiceTile(
                 icon: Icons.local_hospital,
                 title: 'Medicine Dictionary',
-                page: const MedicineApp(),
+                page: MedicineApp(),
               ),
               ServiceTile(
                 icon: Icons.calculate,
@@ -64,17 +64,17 @@ class HomePage extends StatelessWidget {
               ServiceTile(
                 icon: Icons.person_search,
                 title: 'Doctor List',
-                page: const MedicineApp(),
+                page: MedicineApp(),
               ),
               ServiceTile(
                 icon: Icons.phone,
                 title: 'Ambulance Number',
-                page: const MedicineApp(),
+                page: MedicineApp(),
               ),
               ServiceTile(
                 icon: Icons.store_mall_directory,
                 title: 'Nearest Pharmacy',
-                page: const MedicineApp(),
+                page: MedicineApp(),
               ),
               ServiceTile(
                 icon: Icons.local_hospital,

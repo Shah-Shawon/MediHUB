@@ -4,16 +4,18 @@ import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Hospital List',
       theme: ThemeData(primarySwatch: Colors.teal),
-      home: HospitalListScreen(),
+      home: const HospitalListScreen(),
     );
   }
 }
@@ -42,6 +44,8 @@ class Hospital {
 }
 
 class HospitalListScreen extends StatefulWidget {
+  const HospitalListScreen({super.key});
+
   @override
   _HospitalListScreenState createState() => _HospitalListScreenState();
 }
@@ -50,7 +54,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
   List<Hospital> _hospitals = [];
   List<Hospital> _filteredHospitals = [];
   bool _isLoading = true;
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -106,13 +110,13 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
       appBar: AppBar(
         title: TextField(
           controller: _searchController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'Search by division or hospital name',
             border: InputBorder.none,
             hintStyle: TextStyle(color: Colors.white60),
             icon: Icon(Icons.search, color: Colors.white),
           ),
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: const TextStyle(color: Colors.white, fontSize: 18),
         ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -125,21 +129,21 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
         ),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: _filteredHospitals.length,
               itemBuilder: (context, index) {
                 final hospital = _filteredHospitals[index];
                 return Card(
-                  margin: EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(8),
                   elevation: 5,
                   child: ListTile(
                     title: Text(hospital.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     subtitle: Text(hospital.phone,
                         style: TextStyle(color: Colors.grey[600])),
-                    trailing: Icon(Icons.chevron_right, color: Colors.teal),
+                    trailing: const Icon(Icons.chevron_right, color: Colors.teal),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -160,8 +164,7 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
 class HospitalDetailScreen extends StatelessWidget {
   final Hospital hospital;
 
-  const HospitalDetailScreen({Key? key, required this.hospital})
-      : super(key: key);
+  const HospitalDetailScreen({super.key, required this.hospital});
 
   void _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
@@ -175,7 +178,7 @@ class HospitalDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(hospital.name, style: TextStyle(color: Colors.white)),
+        title: Text(hospital.name, style: const TextStyle(color: Colors.white)),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -198,21 +201,21 @@ class HospitalDetailScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.teal[800]),
             ),
-            SizedBox(height: 20),
-            Text('Phone: ${hospital.phone}', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 10),
+            const SizedBox(height: 20),
+            Text('Phone: ${hospital.phone}', style: const TextStyle(fontSize: 20)),
+            const SizedBox(height: 10),
             Text('Opening Time: ${hospital.openingTime}',
-                style: TextStyle(fontSize: 20)),
-            SizedBox(height: 40),
+                style: const TextStyle(fontSize: 20)),
+            const SizedBox(height: 40),
             ElevatedButton.icon(
               onPressed: () => _makePhoneCall(hospital.phone),
-              icon: Icon(Icons.call),
-              label: Text('Call Now'),
+              icon: const Icon(Icons.call),
+              label: const Text('Call Now'),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.teal,
                 padding: const EdgeInsets.symmetric(vertical: 15),
-                textStyle: TextStyle(fontSize: 18),
+                textStyle: const TextStyle(fontSize: 18),
               ),
             ),
           ],
