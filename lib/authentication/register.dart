@@ -14,7 +14,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final _firestore = FirebaseFirestore.instance;
 
   final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -23,8 +22,20 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isLoading = false;
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+  bool _isHoveringSignIn = false; // Hover state for "Sign In"
 
   void _register() async {
+    if (_firstNameController.text.trim().isEmpty ||
+        _phoneController.text.trim().isEmpty ||
+        _emailController.text.trim().isEmpty ||
+        _passwordController.text.trim().isEmpty ||
+        _confirmPasswordController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill all fields.')),
+      );
+      return;
+    }
+
     if (_passwordController.text.trim() !=
         _confirmPasswordController.text.trim()) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -59,7 +70,6 @@ class _RegisterPageState extends State<RegisterPage> {
           'uid': user.uid,
           'email': user.email,
           'first_name': _firstNameController.text.trim(),
-          'last_name': _lastNameController.text.trim(),
           'phone': _phoneController.text.trim(),
         });
       }
@@ -77,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[50],
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: const Text('Create Account',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
@@ -113,9 +123,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       _firstNameController, 'First Name', Icons.person),
                   const SizedBox(height: 20),
                   _buildTextField(
-                      _lastNameController, 'Last Name', Icons.person),
-                  const SizedBox(height: 20),
-                  _buildTextField(
                       _phoneController, 'Phone Number', Icons.phone),
                   const SizedBox(height: 20),
                   _buildTextField(_emailController, 'Email', Icons.email),
@@ -149,55 +156,139 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                   const SizedBox(height: 24),
-                  const Text(
-                    'or sign up with',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.blueGrey,
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 0.5,
+                          color: Colors.blue[200],
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          "or",
+                          style: TextStyle(color: Color(0xFFC1C1C1)),
+                        ),
+                      ),
+                      Expanded(
+                        child: Divider(thickness: 0.5, color: Colors.blue[200]),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          // Add Google login functionality here
-                        },
-                        icon: Image.asset(
-                          'assets/google_logo.png',
-                          width: 40,
-                          height: 40,
+                      // Google Button
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Add Google login logic here
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white, // Google white
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.zero, // No rounded corners
+                              side: BorderSide(color: Colors.black12, width: 1),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/google_logo.png',
+                                width: 24,
+                                height: 24,
+                              ),
+                              const SizedBox(width: 8),
+                              const Text(
+                                "Sign up with Google",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 16),
-                      IconButton(
-                        onPressed: () {
-                          // Add Facebook login functionality here
-                        },
-                        icon: const Icon(
-                          Icons.facebook,
-                          size: 40,
-                          color: Colors.blue,
+                      const SizedBox(width: 10), // Space between buttons
+                      // Facebook Button
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Add Facebook login logic here
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue, // Facebook blue
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.zero, // No rounded corners
+                            ),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.facebook,
+                                size: 24,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                "Sign up with Facebook",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text('Already have an account? ',
                           style: TextStyle(color: Colors.blueGrey)),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/login');
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        onEnter: (_) {
+                          setState(() {
+                            _isHoveringSignIn = true;
+                          });
                         },
-                        child: const Text(
-                          'Sign In',
-                          style: TextStyle(
-                            color: Colors.blueAccent,
-                            fontWeight: FontWeight.bold,
+                        onExit: (_) {
+                          setState(() {
+                            _isHoveringSignIn = false;
+                          });
+                        },
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/login');
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Sign In',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: _isHoveringSignIn
+                                      ? Colors.orange[200]
+                                      : Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              AnimatedOpacity(
+                                opacity: _isHoveringSignIn ? 1.0 : 0.0,
+                                duration: const Duration(milliseconds: 200),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -282,6 +373,42 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
       style: const TextStyle(color: Colors.black87),
+    );
+  }
+
+  Widget _buildSocialLoginButton(String text, dynamic icon, Color bgColor,
+      Color textColor, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 50,
+        width: 160,
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            icon is String
+                ? Image.asset(
+                    icon,
+                    width: 20,
+                    height: 20,
+                  )
+                : Icon(
+                    icon,
+                    size: 20,
+                    color: textColor,
+                  ),
+            const SizedBox(width: 8),
+            Text(
+              text,
+              style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

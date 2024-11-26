@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:medibd/ambulanceNum.dart';
 import 'package:medibd/appbar.dart';
+import 'package:medibd/bloodDonor.dart';
 import 'package:medibd/bmiCalculate.dart';
+import 'package:medibd/doctorList.dart';
 import 'package:medibd/drawer/drawer.dart';
 import 'package:medibd/drugdictionary.dart';
 import 'package:medibd/hospital.dart';
+import 'package:medibd/pharmacyList.dart';
 import 'package:medibd/splash_screen.dart';
 
 void main() {
@@ -20,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
@@ -64,22 +68,32 @@ class HomePage extends StatelessWidget {
               ServiceTile(
                 icon: Icons.person_search,
                 title: 'Doctor List',
-                page: MedicineApp(),
+                page: DoctorApp(),
               ),
               ServiceTile(
                 icon: Icons.phone,
                 title: 'Ambulance Number',
-                page: MedicineApp(),
+                page: AmbulanceApp(),
               ),
               ServiceTile(
                 icon: Icons.store_mall_directory,
                 title: 'Nearest Pharmacy',
-                page: MedicineApp(),
+                page: PharmacyApp(),
               ),
               ServiceTile(
                 icon: Icons.local_hospital,
                 title: 'Nearest Hospital',
                 page: HospitalListScreen(),
+              ),
+              ServiceTile(
+                icon: Icons.bloodtype,
+                title: 'Blood Donor',
+                page: BloodDonorApp(),
+              ),
+              ServiceTile(
+                icon: Icons.health_and_safety,
+                title: 'Symptoms of Disease',
+                page: SymptomsScreen(),
               ),
             ],
           ),
@@ -133,6 +147,44 @@ class ServiceTile extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class BloodDonorScreen extends StatelessWidget {
+  const BloodDonorScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Blood Donor Service'),
+      ),
+      body: const Center(
+        child: Text(
+          'Blood Donor Screen',
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
+    );
+  }
+}
+
+class SymptomsScreen extends StatelessWidget {
+  const SymptomsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Symptoms of Disease'),
+      ),
+      body: const Center(
+        child: Text(
+          'Symptoms of Disease Screen',
+          style: TextStyle(fontSize: 20),
         ),
       ),
     );

@@ -40,7 +40,9 @@ dependencies:
   firebase_core: ^3.6.0
   firebase_auth: ^5.3.1
   google_sign_in: ^6.2.1
-  cloud_firestore: ^5.4.4
+  cloud_firestore: 
+  font_awesome_flutter: ^10.2.0
+  google_maps_flutter: ^2.10.0
   
 
 dev_dependencies:
@@ -71,6 +73,7 @@ flutter:
      - assets/user.png
      - assets/medihubLogo.png
      - assets/google_logo.png
+     - assets/facebook_logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

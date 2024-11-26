@@ -4,6 +4,8 @@ import 'package:medibd/authentication/login.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -53,12 +55,12 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
     // Slide in animations for texts
     _upperTextSlide = Tween<Offset>(
-      begin: Offset(0, -0.5),
+      begin: const Offset(0, -0.5),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _textController, curve: Curves.easeOut));
 
     _lowerTextSlide = Tween<Offset>(
-      begin: Offset(0, 0.5),
+      begin: const Offset(0, 0.5),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _textController, curve: Curves.easeOut));
 
@@ -74,7 +76,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     });
   }
@@ -93,7 +95,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       body: FadeTransition(
         opacity: _fadeInBackground,
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -149,7 +151,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                 // Loading indicator
                 FadeTransition(
                   opacity: _fadeInLogo,
-                  child: CircularProgressIndicator(
+                  child: const CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                 ),
