@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medibd/FitnessTrackerApp/FitnessTrackerApp.dart';
 import 'package:medibd/ambulanceNum.dart';
-import 'package:medibd/appbar.dart';
+
 import 'package:medibd/bloodDonor.dart';
 import 'package:medibd/bmiCalculate.dart';
 import 'package:medibd/doctorList.dart';
@@ -43,9 +43,6 @@ class _HomePageState extends State<HomePage> {
 
   // List of all services
   final List<ServiceTile> allServiceTiles = [
-    
-    
-    
     const ServiceTile(
       icon: Icons.local_hospital,
       title: 'Medicine Dictionary',
@@ -57,20 +54,16 @@ class _HomePageState extends State<HomePage> {
       page: BMICalculatorApp(),
     ),
     const ServiceTile(
-  icon: Icons.fitness_center,  // Icon representing fitness
-  title: 'Fitness Tracker',    // Title for the fitness tracker
-  page: FitnessTrackerApp(),   // Page to navigate to for fitness tracker feature
-),
-
-
-
+      icon: Icons.fitness_center, // Icon representing fitness
+      title: 'Fitness Tracker', // Title for the fitness tracker
+      page:
+          FitnessTrackerApp(), // Page to navigate to for fitness tracker feature
+    ),
     const ServiceTile(
       icon: Icons.person_search,
       title: 'Doctor List',
       page: DoctorApp(),
     ),
-
-
     const ServiceTile(
       icon: Icons.phone,
       title: 'Ambulance Number',
@@ -131,6 +124,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Health App'),
+        backgroundColor: Colors.teal,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

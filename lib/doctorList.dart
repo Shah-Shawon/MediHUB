@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:medibd/homepage.dart'; // Import the Home page file
-import 'package:medibd/details.dart';
 
 void main() {
   runApp(const DoctorApp());

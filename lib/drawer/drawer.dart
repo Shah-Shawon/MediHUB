@@ -37,7 +37,7 @@ class CustomDrawer extends StatelessWidget {
           child: Column(
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountName: Text(userInfo['name'] ?? 'Name not available'),
+                accountName: Text(userInfo['name'] ?? 'User'),
                 accountEmail: Text(userInfo['email'] ?? 'Email not available'),
                 currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage('assets/user.png'),

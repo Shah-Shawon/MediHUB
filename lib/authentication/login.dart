@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (_auth.currentUser!.emailVerified) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/splash');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

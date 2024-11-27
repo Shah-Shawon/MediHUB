@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white, backgroundColor: Colors.teal,
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.teal,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -149,6 +150,7 @@ class _FitnessTrackerAppState extends State<FitnessTrackerApp> {
       appBar: AppBar(
         title: const Text('Fitness Tracker'),
         centerTitle: true,
+        backgroundColor: Colors.teal,
         elevation: 0,
       ),
       body: GestureDetector(
