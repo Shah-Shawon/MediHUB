@@ -29,13 +29,111 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  // Search query controller
+  TextEditingController _searchController = TextEditingController();
+
+  // List of all services
+  final List<ServiceTile> allServiceTiles = [
+    const ServiceTile(
+      icon: Icons.local_hospital,
+      title: 'Medicine Dictionary',
+      page: MedicineApp(),
+    ),
+    const ServiceTile(
+      icon: Icons.calculate,
+      title: 'BMI Calculator',
+      page: BMICalculatorApp(),
+    ),
+    const ServiceTile(
+      icon: Icons.person_search,
+      title: 'Doctor List',
+      page: DoctorApp(),
+    ),
+    const ServiceTile(
+      icon: Icons.phone,
+      title: 'Ambulance Number',
+      page: AmbulanceApp(),
+    ),
+    const ServiceTile(
+      icon: Icons.store_mall_directory,
+      title: 'Nearest Pharmacy',
+      page: PharmacyApp(),
+    ),
+    const ServiceTile(
+      icon: Icons.local_hospital,
+      title: 'Nearest Hospital',
+      page: HospitalListScreen(),
+    ),
+    const ServiceTile(
+      icon: Icons.bloodtype,
+      title: 'Blood Donor',
+      page: BloodDonorApp(),
+    ),
+    const ServiceTile(
+      icon: Icons.health_and_safety,
+      title: 'Symptoms of Disease',
+      page: SymptomsScreen(),
+    ),
+  ];
+
+  // Filtered service list based on search
+  List<ServiceTile> filteredServiceTiles = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Initially show all services
+    filteredServiceTiles = allServiceTiles;
+    // Add listener for search input
+    _searchController.addListener(_filterServices);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  // Function to filter services based on search query
+  void _filterServices() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      filteredServiceTiles = allServiceTiles
+          .where((tile) => tile.title.toLowerCase().contains(query))
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: AppBar(
+        title: const Text('Health App'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: Container(
+              width: 200,
+              child: TextField(
+                controller: _searchController,
+                decoration: const InputDecoration(
+                  hintText: 'Search Services...',
+                  border: OutlineInputBorder(),
+                  suffixIcon: Icon(Icons.search),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       drawer: const CustomDrawer(),
       body: Container(
         decoration: const BoxDecoration(
@@ -50,52 +148,16 @@ class HomePage extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: GridView.count(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-            children: const <Widget>[
-              ServiceTile(
-                icon: Icons.local_hospital,
-                title: 'Medicine Dictionary',
-                page: MedicineApp(),
-              ),
-              ServiceTile(
-                icon: Icons.calculate,
-                title: 'BMI Calculator',
-                page: BMICalculatorApp(),
-              ),
-              ServiceTile(
-                icon: Icons.person_search,
-                title: 'Doctor List',
-                page: DoctorApp(),
-              ),
-              ServiceTile(
-                icon: Icons.phone,
-                title: 'Ambulance Number',
-                page: AmbulanceApp(),
-              ),
-              ServiceTile(
-                icon: Icons.store_mall_directory,
-                title: 'Nearest Pharmacy',
-                page: PharmacyApp(),
-              ),
-              ServiceTile(
-                icon: Icons.local_hospital,
-                title: 'Nearest Hospital',
-                page: HospitalListScreen(),
-              ),
-              ServiceTile(
-                icon: Icons.bloodtype,
-                title: 'Blood Donor',
-                page: BloodDonorApp(),
-              ),
-              ServiceTile(
-                icon: Icons.health_and_safety,
-                title: 'Symptoms of Disease',
-                page: SymptomsScreen(),
-              ),
-            ],
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // Always 2 items per row
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+            ),
+            itemCount: filteredServiceTiles.length,
+            itemBuilder: (context, index) {
+              return filteredServiceTiles[index];
+            },
           ),
         ),
       ),
@@ -117,13 +179,15 @@ class ServiceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => page),
         );
       },
+      borderRadius: BorderRadius.circular(10.0),
+      splashColor: Colors.blue.withOpacity(0.3),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.8),
@@ -132,10 +196,13 @@ class ServiceTile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(
-              icon,
-              size: 40.0,
-              color: Colors.blue,
+            Semantics(
+              label: title,
+              child: Icon(
+                icon,
+                size: 40.0,
+                color: Colors.blue,
+              ),
             ),
             const SizedBox(height: 10.0),
             Text(

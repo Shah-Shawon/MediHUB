@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:medibd/homepage.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -107,23 +108,52 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: TextField(
-          controller: _searchController,
-          decoration: const InputDecoration(
-            hintText: 'Search by division or hospital name',
-            border: InputBorder.none,
-            hintStyle: TextStyle(color: Colors.white60),
-            icon: Icon(Icons.search, color: Colors.white),
-          ),
-          style: const TextStyle(color: Colors.white, fontSize: 18),
-        ),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100.0),
+        child: Container(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.teal[700]!, Colors.teal[400]!],
+              colors: [Color(0xFF009688), Color(0xFF004D40)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+          ),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.home, color: Colors.white),
+                  onPressed: () {
+                    // Navigate to the home screen (or handle your own navigation)
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  },
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: _searchController,
+                    onChanged: (query) {
+                      _filterHospitals();
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Search by division or hospital name',
+                      hintStyle:
+                          TextStyle(color: Color.fromARGB(137, 255, 255, 255)),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -131,28 +161,55 @@ class _HospitalListScreenState extends State<HospitalListScreen> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
+              padding: const EdgeInsets.all(8.0),
               itemCount: _filteredHospitals.length,
               itemBuilder: (context, index) {
                 final hospital = _filteredHospitals[index];
                 return Card(
-                  margin: const EdgeInsets.all(8),
                   elevation: 5,
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   child: ListTile(
-                    title: Text(hospital.name,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    subtitle: Text(hospital.phone,
-                        style: TextStyle(color: Colors.grey[600])),
-                    trailing: const Icon(Icons.chevron_right, color: Colors.teal),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              HospitalDetailScreen(hospital: hospital),
+                    contentPadding: const EdgeInsets.all(16),
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.tealAccent.shade700,
+                      child: const Icon(
+                        Icons.local_hospital,
+                        color: Colors.white,
+                      ),
+                    ),
+                    title: Text(
+                      hospital.name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Phone: ${hospital.phone}\nDivision: ${hospital.division}',
+                      style: TextStyle(color: Colors.teal.shade700),
+                    ),
+                    trailing: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 130, 221, 210),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      );
-                    },
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                HospitalDetailScreen(hospital: hospital),
+                          ),
+                        );
+                      },
+                      child: const Text('Details'),
+                    ),
                   ),
                 );
               },
@@ -178,31 +235,18 @@ class HospitalDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(hospital.name, style: const TextStyle(color: Colors.white)),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.teal[700]!, Colors.teal[400]!],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
+        title: Text(hospital.name),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Division: ${hospital.division}',
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.teal[800]),
-            ),
+            Text('Division: ${hospital.division}',
+                style: const TextStyle(fontSize: 22)),
             const SizedBox(height: 20),
-            Text('Phone: ${hospital.phone}', style: const TextStyle(fontSize: 20)),
+            Text('Phone: ${hospital.phone}',
+                style: const TextStyle(fontSize: 20)),
             const SizedBox(height: 10),
             Text('Opening Time: ${hospital.openingTime}',
                 style: const TextStyle(fontSize: 20)),

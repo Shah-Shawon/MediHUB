@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:medibd/details.dart';
+import 'package:medibd/homepage.dart'; // Import Home page file
 
 void main() {
   runApp(const MedicineApp());
@@ -123,15 +124,33 @@ class _MedicineListPageState extends State<MedicineListPage> {
           child: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: TextField(
-              onChanged: _filterMedicines,
-              decoration: const InputDecoration(
-                hintText: 'Search by name or category',
-                hintStyle: TextStyle(color: Color.fromARGB(137, 255, 255, 255)),
-                border: InputBorder.none,
-                prefixIcon: Icon(Icons.search, color: Colors.white),
-              ),
-              style: const TextStyle(color: Colors.white),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.end, // Aligning to the right
+              children: [
+                Expanded(
+                  child: TextField(
+                    onChanged: _filterMedicines,
+                    decoration: const InputDecoration(
+                      hintText: 'Search by name or category',
+                      hintStyle:
+                          TextStyle(color: Color.fromARGB(137, 255, 255, 255)),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+            leading: IconButton(
+              icon: const Icon(Icons.home, color: Colors.white),
+              onPressed: () {
+                // Navigate back to the home page
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
+              },
             ),
           ),
         ),

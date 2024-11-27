@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medibd/homepage.dart';
 
 void main() {
   runApp(const BMICalculatorApp());
@@ -57,13 +58,13 @@ class _BMICalculatorState extends State<BMICalculator> {
 
   String _getBMISuggestion(double bmi) {
     if (bmi < 18.5) {
-      return "Underweight: It's important to eat a balanced diet.";
+      return "অধিক কম ওজন: আপনি যে খাদ্য গ্রহণ করেন তা সুষম হতে হবে। সুস্থ থাকার জন্য পুষ্টিকর খাবার খাওয়া উচিত।";
     } else if (bmi >= 18.5 && bmi < 24.9) {
-      return "Normal weight: Keep up the good work!";
+      return "স্বাভাবিক ওজন: ভাল কাজ করছেন! স্বাস্থ্যকর জীবনযাত্রা বজায় রাখুন।";
     } else if (bmi >= 25 && bmi < 29.9) {
-      return "Overweight: Consider a healthy diet and regular exercise.";
+      return "অতিরিক্ত ওজন: সুস্থ জীবনযাত্রা বজায় রাখার জন্য স্বাস্থ্যকর খাবার এবং নিয়মিত ব্যায়াম করুন।";
     } else {
-      return "Obese: Consult a healthcare provider for personalized advice.";
+      return "মোটা: দয়া করে একজন স্বাস্থ্য পেশাদারের সাথে পরামর্শ করুন এবং স্বাস্থ্যকর জীবনযাপন শুরু করুন।";
     }
   }
 
@@ -72,6 +73,16 @@ class _BMICalculatorState extends State<BMICalculator> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('BMI Calculator'),
+        leading: IconButton(
+          icon: const Icon(Icons.home),
+          onPressed: () {
+            // Navigate back to home page
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          },
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(

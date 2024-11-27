@@ -60,18 +60,29 @@ class _PharmacyListPageState extends State<PharmacyListPage> {
   }
 
   Future<void> _fetchPharmacies() async {
-    final response =
-        await http.get(Uri.parse('https://shah-shawon.github.io/pharmacyList.json'));
-    
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonData = json.decode(response.body);
+    try {
+      final response = await http.get(
+        Uri.parse('https://shah-shawon.github.io/pharmacyList.json'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonData = json.decode(response.body);
+        final List<dynamic> pharmaciesJson = jsonData['pharmacies'];
+
+        setState(() {
+          _pharmacies =
+              pharmaciesJson.map((json) => Pharmacy.fromJson(json)).toList();
+          _filteredPharmacies = _pharmacies;
+          _isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load pharmacies');
+      }
+    } catch (error) {
       setState(() {
-        _pharmacies = jsonData.map((json) => Pharmacy.fromJson(json)).toList();
-        _filteredPharmacies = _pharmacies;
         _isLoading = false;
       });
-    } else {
-      throw Exception('Failed to load pharmacies');
+      // Optionally, handle the error with a dialog or a message on the UI.
     }
   }
 

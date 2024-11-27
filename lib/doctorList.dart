@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:medibd/homepage.dart'; // Import the Home page file
 import 'package:medibd/details.dart';
 
 void main() {
@@ -53,7 +54,6 @@ class DoctorListPage extends StatefulWidget {
   const DoctorListPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _DoctorListPageState createState() => _DoctorListPageState();
 }
 
@@ -115,20 +115,37 @@ class _DoctorListPageState extends State<DoctorListPage> {
           child: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: TextField(
-              onChanged: (query) {
-                setState(() {
-                  _searchQuery = query;
-                });
-                _filterDoctors();
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: TextField(
+                    onChanged: (query) {
+                      setState(() {
+                        _searchQuery = query;
+                      });
+                      _filterDoctors();
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Search by name and speciality',
+                      hintStyle:
+                          TextStyle(color: Color.fromARGB(137, 255, 255, 255)),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+            leading: IconButton(
+              icon: const Icon(Icons.home, color: Colors.white),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
               },
-              decoration: const InputDecoration(
-                hintText: 'Search by name or category',
-                hintStyle: TextStyle(color: Color.fromARGB(137, 255, 255, 255)),
-                border: InputBorder.none,
-                prefixIcon: Icon(Icons.search, color: Colors.white),
-              ),
-              style: const TextStyle(color: Colors.white),
             ),
           ),
         ),
@@ -175,7 +192,6 @@ class _DoctorListPageState extends State<DoctorListPage> {
                         ),
                       ),
                       onPressed: () {
-                        // Navigate to doctor details page
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -210,14 +226,16 @@ class DoctorDetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Field of Interest: ${doctor.fieldOfInterest}',
-                style: TextStyle(fontSize: 18)),
+                style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 8),
-            Text('Chamber: ${doctor.chamber}', style: TextStyle(fontSize: 18)),
+            Text('Chamber: ${doctor.chamber}',
+                style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 8),
             Text('Visit Time: ${doctor.visitTime}',
-                style: TextStyle(fontSize: 18)),
+                style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 8),
-            Text('Phone: ${doctor.phone}', style: TextStyle(fontSize: 18)),
+            Text('Phone: ${doctor.phone}',
+                style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {

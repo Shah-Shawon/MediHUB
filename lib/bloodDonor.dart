@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:medibd/homepage.dart';
+
 void main() {
   runApp(const BloodDonorApp());
 }
@@ -120,15 +122,30 @@ class _BloodDonorListPageState extends State<BloodDonorListPage> {
           ),
           child: AppBar(
             backgroundColor: Colors.transparent,
-            title: TextField(
-              onChanged: _filterDonors,
-              decoration: const InputDecoration(
-                hintText: 'Search by name or blood group',
-                hintStyle: TextStyle(color: Colors.white70),
-                border: InputBorder.none,
-                prefixIcon: Icon(Icons.search, color: Colors.white),
-              ),
-              style: const TextStyle(color: Colors.white),
+            title: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.home, color: Colors.white),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  },
+                ),
+                Expanded(
+                  child: TextField(
+                    onChanged: _filterDonors,
+                    decoration: const InputDecoration(
+                      hintText: 'Search by name or blood group',
+                      hintStyle: TextStyle(color: Colors.white70),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -150,8 +167,8 @@ class _BloodDonorListPageState extends State<BloodDonorListPage> {
                     contentPadding: const EdgeInsets.all(16),
                     leading: CircleAvatar(
                       backgroundColor: donor.availability == 'Yes'
-                          ? Colors.red[300] // Teal for availability
-                          : Colors.green[300], // Grey for unavailable
+                          ? Colors.green[300] // Green for available donors
+                          : Colors.red[300], // Red for unavailable
                       child: const Icon(
                         Icons.bloodtype,
                         color: Colors.white,
@@ -170,7 +187,7 @@ class _BloodDonorListPageState extends State<BloodDonorListPage> {
                     ),
                     trailing: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.tealAccent, // Teal color button
+                        backgroundColor: Colors.tealAccent, // Teal button color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:medibd/details.dart';
+import 'package:medibd/homepage.dart';
 
 void main() {
   runApp(const AmbulanceApp());
@@ -101,6 +101,16 @@ class _AmbulanceListPageState extends State<AmbulanceListPage> {
           child: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.home, color: Colors.white),
+              onPressed: () {
+                // Navigate to the homepage
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
+              },
+            ),
             title: TextField(
               onChanged: _filterAmbulances,
               decoration: const InputDecoration(
