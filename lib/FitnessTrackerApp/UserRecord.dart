@@ -66,27 +66,61 @@ class _UserRecordState extends State<UserRecord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('View Records')),
+      appBar: AppBar(
+        title: const Text('View Records'),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
       body: _records.isEmpty
-          ? const Center(child: Text('No records available.'))
+          ? const Center(child: Text('No records available.', style: TextStyle(fontSize: 18, color: Colors.grey)))
           : ListView.builder(
               itemCount: _records.length,
               itemBuilder: (context, index) {
                 final record = _records[index];
                 return Card(
-                  child: ListTile(
-                    title: Text('Date: ${record['date']}'),
-                    subtitle: Text(
-                      'Steps: ${record['stepCount']}, Calories: ${record['caloriesBurned']}\n'
-                      'Height: ${record['height']} cm, Weight: ${record['weight']} kg\n'
-                      'BMI: ${record['bmi']}, Body Fat: ${record['bodyFat']}%\n'
-                      'Heart Rate: ${record['heartRate']} bpm, Blood Pressure: ${record['bloodPressure']} mmHg\n'
-                      'Sleep: ${record['sleepDuration']} hrs',
+                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Date: ${record['date']}',
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal),
+                        ),
+                        const SizedBox(height: 10),
+                        _buildRecordRow('Steps:', record['stepCount'].toString(), Icons.directions_walk),
+                        _buildRecordRow('Calories Burned:', record['caloriesBurned'].toString(), Icons.local_fire_department),
+                        _buildRecordRow('Height:', '${record['height']} cm', Icons.height),
+                        _buildRecordRow('Weight:', '${record['weight']} kg', Icons.monitor_weight),
+                        _buildRecordRow('BMI:', record['bmi'].toString(), Icons.health_and_safety),
+                        _buildRecordRow('Body Fat:', '${record['bodyFat']}%', Icons.assessment),
+                        _buildRecordRow('Heart Rate:', '${record['heartRate']} bpm', Icons.favorite),
+                        _buildRecordRow('Blood Pressure:', record['bloodPressure'], Icons.medical_services),
+                        _buildRecordRow('Sleep Duration:', '${record['sleepDuration']} hrs', Icons.nightlight_round),
+                      ],
                     ),
                   ),
                 );
               },
             ),
+    );
+  }
+
+  Widget _buildRecordRow(String label, String value, IconData icon) {
+    return Row(
+      children: [
+        Icon(icon, color: Colors.teal, size: 28),
+        const SizedBox(width: 10),
+        Text(
+          '$label $value',
+          style: const TextStyle(fontSize: 16),
+        ),
+      ],
     );
   }
 }

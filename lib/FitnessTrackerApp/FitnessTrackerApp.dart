@@ -17,7 +17,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Fitness Tracker',
-      theme: ThemeData(primarySwatch: Colors.teal),
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.teal[50],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white, backgroundColor: Colors.teal,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            textStyle: const TextStyle(fontSize: 16),
+          ),
+        ),
+      ),
       home: const FitnessTrackerApp(),
     );
   }
@@ -126,7 +146,11 @@ class _FitnessTrackerAppState extends State<FitnessTrackerApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Fitness Tracker')),
+      appBar: AppBar(
+        title: const Text('Fitness Tracker'),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: GestureDetector(
         onHorizontalDragEnd: (details) {
           if (details.velocity.pixelsPerSecond.dx > 0) {
@@ -220,13 +244,13 @@ class _FitnessTrackerAppState extends State<FitnessTrackerApp> {
 
   Widget _buildInputField(String label, TextEditingController controller) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 16),
       child: TextField(
         controller: controller,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: label,
-          border: const OutlineInputBorder(),
+          suffixIcon: Icon(Icons.edit, color: Colors.teal),
         ),
       ),
     );
